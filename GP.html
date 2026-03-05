@@ -459,7 +459,7 @@ async function listZones() {
       let shajson;
       let sha;
         try {
-          sharesponse = await fetch("https://api.github.com/repos/%67%6e%2d%6d%61%74%68/assets-gn/commits?t="+Date.now());
+          sharesponse = await fetch("https://api.github.com/repos/Bubbergamesites/assets-gn/commits?t="+Date.now());
         } catch (error) {}
         if (sharesponse && sharesponse.status === 200) {
           try {
