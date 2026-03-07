@@ -308,26 +308,81 @@
         z-index: 9999;
     }
 
-    .popup {
-        background: var(--surface);
-        border-radius: var(--radius-xl);
-        border: 2px solid var(--primary);
-        box-shadow: 0 0 40px rgba(188, 19, 254, 0.3);
-        padding: 2rem;
-        min-width: 320px;
+    
+
+    .control-buttons {
+        display: flex;
+        gap: 15px;
+        align-items: center;
     }
 
+    .control-button {
+        background: transparent;
+        border: none;
+        color: var(--accent);
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .control-button:hover {
+        transform: rotate(45deg);
+        color: var(--primary-hover);
+        filter: drop-shadow(0 0 8px var(--accent));
+    }
+
+    .control-button svg {
+        width: 28px;
+        height: 28px;
+    }
+
+/* Fixed the width and added display properties */
     .settings-button {
         background: var(--gradient-primary);
         color: #ffffff !important;
         padding: 12px;
         border: none;
         border-radius: var(--radius-sm);
-        width:\;
+        width: 100%; 
         font-weight: 800;
-        box-shadow: var(--shadow-sm);
+        cursor: pointer;
+        margin-bottom: 10px;
+        display: block;
+    }
+    
+    .popup {
+        background: #1a0033; /* Solid background to prevent transparency issues */
+        border-radius: var(--radius-xl);
+        border: 2px solid var(--primary);
+        box-shadow: 0 0 40px rgba(188, 19, 254, 0.5);
+        padding: 2rem;
+        min-width: 350px;
+        max-width: 90%;
+        position: relative;
     }
 
+    .popup-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    #popupClose {
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 2rem;
+        cursor: pointer;
+        line-height: 1;
+    }
+    
+    .settings-button:hover {
+        transform: scale(1.02);
+        box-shadow: var(--shadow-glow);
+    }
     .input-group input {
         width: 100%;
         padding: 12px 15px;
@@ -363,7 +418,7 @@
                     <option value="trendingWeek">Trending (Week)</option>
                     <option value="trendingMonth">Trending (Month)</option>
                 </select>
-                <select id="filterOptions" onchange="filterZones()">
+                <select id="filterOptions" onchange="filterZones2()">
                     <option value="none">(SELECT TAG)</option>
                 </select>
             </div>
@@ -1070,16 +1125,24 @@ function tabCloak() {
 
 const settings = document.getElementById('settings');
 settings.addEventListener('click', () => {
-    document.getElementById('popupTitle').textContent = "Settings";
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupTitle = document.getElementById('popupTitle');
     const popupBody = document.getElementById('popupBody');
+
+    // Force the overlay to show
+    popupOverlay.style.display = "flex";
+    
+    popupTitle.textContent = "Settings";
+    popupBody.contentEditable = "false";
+
+    // Inject the buttons
     popupBody.innerHTML = `
-    <button class="settings-button" onclick="darkMode()">Toggle Dark Mode</button>
-    <br><br>
-    <button class="settings-button" onclick="tabCloak()">Tab Cloak</button>
-    <br>
+        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+            <button class="settings-button" onclick="darkMode()">Toggle Dark Mode</button>
+            <button class="settings-button" onclick="tabCloak()">Tab Cloak</button>
+            <button class="settings-button" style="background:rgba(255,255,255,0.1)" onclick="closePopup()">Close</button>
+        </div>
     `;
-    popupBody.contentEditable = false;
-    document.getElementById('popupOverlay').style.display = "flex";
 });
 
 
